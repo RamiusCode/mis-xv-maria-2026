@@ -1,0 +1,286 @@
+---
+// Misa.astro
+---
+
+<section class="pt-12 pb-12 px-4 relative">
+    <div class="max-w-xl mx-auto text-center relative">
+        <!-- TÍTULO MISA -->
+        <div class="" id="titulo-misa">
+            <h2
+                class="font-charm text-2xl md:text-3xl text-[#8E9198] font-bold tracking-wide"
+            >
+                MISA
+            </h2>
+        </div>
+        <!-- 🏛️ ICONO MISA CON MARIPOSAS -->
+        <div
+            class="flex justify-center items-center gap-4 md:gap-6 mb-4"
+            id="icono-misa"
+        >
+            <!-- 🦋 MARIPOSA IZQUIERDA -->
+            <div
+                class="mariposa-flotante flex items-center"
+                id="mariposa-misa-izq"
+            >
+                <img
+                    src="/gif/pajarito.png"
+                    alt="Mariposa"
+                    class="w-32 h-32 object-contain"
+                />
+            </div>
+
+            <!-- ICONO CENTRAL -->
+            <img
+                src="/imagenes/iglesia.png"
+                alt="Icono de misa"
+                class="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain icono-dorado"
+            />
+
+            <!-- 🦋 MARIPOSA DERECHA -->
+            <div
+                class="mariposa-flotante flex items-center"
+                id="mariposa-misa-der"
+            >
+                <img
+                    src="/gif/pajarito.png"
+                    alt="Mariposa"
+                    class="w-32 h-32 object-contain scale-x-[-1]"
+                />
+            </div>
+        </div>
+
+        <!-- TÍTULO DIRECCIÓN -->
+        <div class="mb-2" id="subtitulo-misa">
+            <h2
+                class="font-charm text-2xl md:text-3xl text-[#8E9198] font-bold tracking-wide"
+            >
+                Dirección
+            </h2>
+        </div>
+
+        <!-- INFORMACIÓN DE UBICACIÓN -->
+        <div class="mb-2" id="info-misa">
+            <!-- Nombre del lugar -->
+            <h3
+                class="font-charm text-xl md:text-2xl text-[#8E9198] font-bold mb-2"
+            >
+                Iglesia de la Tercera Orden Franciscana
+            </h3>
+
+            <!-- Dirección -->
+            <p
+                class="font-charm text-xl md:text-xl text-[#85abbf] leading-relaxed mb-3"
+            >
+                Barrio Las Panosas, Calle Abaroa, <br /> entre Junín e Isaac Attie
+            </p>
+
+            <!-- Hora -->
+            <p class="font-charm text-xl md:text-2xl text-[#8E9198] font-bold">
+                Hora: 17:00
+            </p>
+        </div>
+
+        <!-- BOTÓN VER UBICACIÓN - ROSADO SIMPLE -->
+        <div class="flex justify-center" id="boton-misa">
+            <a
+                href="https://maps.app.goo.gl/ovwPdXT7zGqAXv3c9"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex
+            items-center justify-center gap-2 px-8 py-3 md:px-10 md:py-4
+            bg-[#85abbf] rounded-lg shadow-md hover:shadow-lg hover:bg-[#85abbf]
+            transition-all duration-300"
+            >
+                <!-- Icono de ubicación -->
+                <svg
+                    class="w-5 h-5 md:w-6 md:h-6 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                    ></path>
+                </svg>
+
+                <!-- Texto -->
+                <span
+                    class="font-charm text-lg md:text-xl text-white font-semibold"
+                >
+                    Ver Ubicación
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        import { gsap } from "gsap";
+        import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (typeof window !== "undefined") {
+            document.addEventListener("DOMContentLoaded", () => {
+                // Estado inicial
+                gsap.set("#icono-misa", { opacity: 0, scale: 0.8 });
+                gsap.set("#titulo-misa", { opacity: 0, scale: 0.9 });
+                gsap.set("#subtitulo-misa", { opacity: 0, scale: 0.9 });
+                gsap.set("#info-misa", { opacity: 0, scale: 0.9 });
+                gsap.set("#boton-misa", { opacity: 0, scale: 0.9 });
+                gsap.set("#mariposa-misa-izq", { opacity: 0, x: -30 });
+                gsap.set("#mariposa-misa-der", { opacity: 0, x: 30 });
+
+                // ✨ ANIMACIÓN SIMULTÁNEA - TODO AL MISMO TIEMPO
+                ScrollTrigger.create({
+                    trigger: "#icono-misa",
+                    start: "top 85%",
+                    end: "top 20%",
+                    onEnter: () => {
+                        const tl = gsap.timeline();
+
+                        // TODO aparece al mismo tiempo
+                        tl.to(
+                            "#icono-misa, #mariposa-misa-izq, #mariposa-misa-der, #titulo-misa, #subtitulo-misa, #info-misa, #boton-misa",
+                            {
+                                opacity: 1,
+                                duration: 1,
+                                ease: "power2.out",
+                            },
+                        )
+                            // Animaciones individuales (simultáneas)
+                            .to(
+                                "#icono-misa",
+                                {
+                                    scale: 1,
+                                    duration: 1,
+                                    ease: "back.out(1.5)",
+                                },
+                                "<",
+                            )
+                            .to(
+                                "#mariposa-misa-izq",
+                                {
+                                    x: 0,
+                                    duration: 1,
+                                    ease: "power2.out",
+                                },
+                                "<",
+                            )
+                            .to(
+                                "#mariposa-misa-der",
+                                {
+                                    x: 0,
+                                    duration: 1,
+                                    ease: "power2.out",
+                                },
+                                "<",
+                            )
+                            .to(
+                                "#titulo-misa, #subtitulo-misa, #info-misa, #boton-misa",
+                                {
+                                    scale: 1,
+                                    duration: 1,
+                                    ease: "back.out(1.2)",
+                                },
+                                "<",
+                            );
+
+                        // 🦋 FLOTADO CONTINUO DE MARIPOSAS (después de aparecer)
+                        gsap.to("#mariposa-misa-izq", {
+                            y: -15,
+                            x: 5,
+                            rotation: 5,
+                            duration: 3,
+                            ease: "sine.inOut",
+                            yoyo: true,
+                            repeat: -1,
+                            delay: 0.5,
+                        });
+
+                        gsap.to("#mariposa-misa-der", {
+                            y: -15,
+                            x: -5,
+                            rotation: -5,
+                            duration: 3.2,
+                            ease: "sine.inOut",
+                            yoyo: true,
+                            repeat: -1,
+                            delay: 0.7,
+                        });
+                    },
+                    onLeaveBack: () => {
+                        // Salida simultánea
+                        const tl = gsap.timeline();
+
+                        tl.to(
+                            "#icono-misa, #mariposa-misa-izq, #mariposa-misa-der, #titulo-misa, #subtitulo-misa, #info-misa, #boton-misa",
+                            {
+                                opacity: 0,
+                                duration: 0.5,
+                                ease: "power2.in",
+                            },
+                        )
+                            .to(
+                                "#icono-misa",
+                                {
+                                    scale: 0.8,
+                                    duration: 0.5,
+                                    ease: "power2.in",
+                                },
+                                "<",
+                            )
+                            .to(
+                                "#mariposa-misa-izq",
+                                {
+                                    x: -30,
+                                    duration: 0.5,
+                                    ease: "power2.in",
+                                },
+                                "<",
+                            )
+                            .to(
+                                "#mariposa-misa-der",
+                                {
+                                    x: 30,
+                                    duration: 0.5,
+                                    ease: "power2.in",
+                                },
+                                "<",
+                            )
+                            .to(
+                                "#titulo-misa, #subtitulo-misa, #info-misa, #boton-misa",
+                                {
+                                    scale: 0.9,
+                                    duration: 0.5,
+                                    ease: "power2.in",
+                                },
+                                "<",
+                            );
+                    },
+                });
+
+                console.log("⛪🦋 Sección de Misa con mariposas inicializada");
+            });
+        }
+    </script>
+
+    <style>
+        /* Asegurar que las mariposas tengan un movimiento fluido */
+        .mariposa-flotante {
+            will-change: transform;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover en las mariposas */
+        .mariposa-flotante:hover {
+            transform: scale(1.1) !important;
+            filter: brightness(1.2);
+        }
+
+        .icono-dorado {
+            /* Color #85abbf con efecto hover */
+            filter: brightness(0) saturate(100%) invert(67%) sepia(13%)
+                saturate(1168%) hue-rotate(162deg) brightness(92%) contrast(88%)
+                drop-shadow(0 6px 16px rgba(133, 171, 191, 0.5));
+        }
+    </style>
+</section>
